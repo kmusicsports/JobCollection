@@ -208,8 +208,8 @@ erDiagram
 <!-- #### 前提条件 -->
 
 - [Docker, Docker Compose](https://www.docker.com/)
-- VSCode拡張機能（どれかが不要になるかも）
-  - Remote Development
+- Python 3.11
+- VSCode拡張機能
   - Python
   - EditorConfig for VS Code
 
