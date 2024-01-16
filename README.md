@@ -120,14 +120,9 @@
 
 ```Mermaid
 erDiagram
-  company ||--|| company_info : has
   company {
     int id
     string name
-  }
-  company_info {
-    int id
-    int company_id
     string business
     string mvv
     string required_skill
@@ -149,18 +144,34 @@ erDiagram
 
 #### テーブル定義
 
-- company
-  | No | 論理名(カラム名) | 物理名(内容) | データ型 | PK | FK | Not Null | Default | Unique |
-  | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-  |  |  |  |  |  |  |  |  |  |
-- company_info
-  | No | 論理名(カラム名) | 物理名(内容) | データ型 | PK | FK | Not Null | Default | Unique |
-  | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-  |  |  |  |  |  |  |  |  |  |
-- company_connection
-  | No | 論理名(カラム名) | 物理名(内容) | データ型 | PK | FK | Not Null | Default | Unique |
-  | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-  |  |  |  |  |  |  |  |  |  |
+<details><summary>company</summary>
+
+| No | 論理名(カラム名) | 物理名(内容) | データ型 | PK | FK | Not Null | Default | Unique |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | id | 企業のID | INT | 〇 |  | 〇 | AUTO_INCREMENT |  |
+| 2 | name | 企業名 | VARCHAR |  |  | 〇 |  |  |
+| 3 | business | 業務内容 | TEXT |  |  |  |  |  |
+| 4 | mvv | 経営理念 | TEXT |  |  |  |  |  |
+| 5 | required_skill | 求められているスキル | TEXT |  |  |  |  |  |
+| 6 | location | 勤務地(本社の所在地、支社など) | TEXT |  |  |  |  |  |
+| 7 | benefit | 福利厚生・社内制度 | TEXT |  |  |  |  |  |
+| 8 | applying_motivation | 志望動機 | TEXT |  |  |  |  |  |
+
+</details>
+
+<details><summary>company_connection</summary>
+
+| No | 論理名(カラム名) | 物理名(内容) | データ型 | PK | FK | Not Null | Default | Unique |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | id | 接触情報のID | INT | 〇 |  | 〇 | AUTO_INCREMENT |  |
+| 2 | company_id | 企業のID | INT |  | 〇 | 〇 |  | 〇 |
+| 3 | company_date | 接触日時 | DATE |  |  | 〇 |  |  |
+| 4 | way | 接触方法 | TEXT |  |  |  |  |  |
+| 5 | employee | 担当者、接触した社員の情報 | TEXT |  |  |  |  |  |
+| 6 | content | 内容 | TEXT |  |  | 〇 |  |  |
+| 7 | route | 経由 | TEXT |  |  |  |  |  |
+
+</details>
 
 ### 使用技術
 
@@ -187,7 +198,8 @@ erDiagram
 │   python                             Python関連
 │   ├── app                            アプリ関連
 │   │   ├── controller                 制御、リクエストマッピング
-│   │   ├── model                      Entity・Form・DTO、データとロジック（エンタープライズビジネスルール）
+│   │   ├── entity                     テーブルと紐づくモデル
+│   │   ├── model                      表示用のモデル
 │   │   ├── repository                 データ操作
 │   │   ├── service                    ビジネスロジック（アプリケーションビジネスルール）
 │   │   ├── static                     静的ファイル群
