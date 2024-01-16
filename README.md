@@ -113,8 +113,283 @@
 
 #### クラス図
 
+<details><summary>企業管理</summary>
+
 ```Mermaid
+---
+title: 企業管理
+---
+classDiagram
+  class CompanyController {
+    -CompanyService company_service
+    +CompanyController(CompanyService company_service)
+    +create() werkzeug.wrappers.response.Response
+    +show_list() str
+    +show_detail(int id) str
+    +delete(int id) werkzeug.wrappers.response.Response
+  }
+  class CompanyService {
+    +create(ImmutableMultiDict[str, str] form) str | None
+    +make_list() list[CompanyName]
+    +find(int id) CompanyName | None
+    +delete(int id) str | None
+  }
+  class CompanyServiceImpl {
+    -CompanyRepository company_repository
+    +CompanyServiceImpl(CompanyRepository company_repository)
+    +create(ImmutableMultiDict[str, str] form) str | None
+    +make_list() list[CompanyName]
+    +find(int id) CompanyName | None
+    +delete(int id) str | None
+  }
+  class CompanyRepository {
+    +create(Company company) Company | None
+    +find(int id) Company | None
+    +find_all() list[Company]
+    +update(Company company) Exception | None
+    +delete(int id) Exception | None
+  }
+  class CompanyRepositoryImpl {
+    +CompanyRepositoryImpl()
+    +create(Company company) Company | None
+    +find(int id) Company | None
+    +find_all() list[Company]
+    +update(Company company) Exception | None
+    +delete(int id) Exception | None
+  }
+  class CompanyName {
+    -int id
+    -str name
+    +CompanyName()
+    +CompanyName(Company company)
+    +toEntity() Company
+  }
+  class Company {
+    -int id
+    -str name
+    -str business
+    -str mvv
+    -str required_skill
+    -str location
+    -str benefit
+    -str applying_motivation
+    +Company(name)
+    +Company(int id, str name, str business, str mvv, str required_skill, str location, str benefit, str applying_motivation)
+    +get_id()
+    +get_name()
+    +get_business()
+    +get_mvv()
+    +get_required_skill()
+    +get_location()
+    +get_benefit()
+    +get_applying_motivation()
+  }
+  <<interface>> CompanyRepository
+  <<interface>> CompanyService
+  CompanyController..>CompanyService : 依存
+  CompanyService..|>CompanyServiceImpl : 実現
+  CompanyServiceImpl..>CompanyRepository : 依存
+  CompanyRepository..|>CompanyRepositoryImpl : 実現
+  CompanyName--Company : 関連
+  CompanyController--CompanyName : 関連
+  CompanyService--CompanyName : 関連
+  CompanyServiceImpl--CompanyName : 関連
+  CompanyRepository--Company : 関連
+  CompanyRepositoryImpl--Company : 関連
 ```
+
+</details>
+
+<details><summary>企業の基本情報管理</summary>
+
+```Mermaid
+---
+title: 企業の基本情報管理
+---
+classDiagram
+  class CompanyInfoController {
+    -CompanyInfoService company_info_service
+    +CompanyInfoController(CompanyInfoService company_info_service)
+    +show(int id) str
+    +update(ImmutableMultiDict[str, str] form) werkzeug.wrappers.response.Response
+  }
+  class CompanyInfoService {
+    +find(int id) CompanyInfo | None
+    +update(ImmutableMultiDict[str, str] form) str | None
+  }
+  class CompanyInfoServiceImpl {
+    -CompanyRepository company_repository
+    +CompanyInfoServiceImpl(CompanyRepository company_repository)
+    +find(int id) CompanyInfo | None
+    +update(ImmutableMultiDict[str, str] form) str | None
+  }
+  class CompanyRepository {
+    +create(Company company) Company | None
+    +find(int id) Company | None
+    +find_all() list[Company]
+    +update(Company company) Exception | None
+    +delete(int id) Exception | None
+  }
+  class CompanyRepositoryImpl {
+    +CompanyRepositoryImpl()
+    +create(Company company) Company | None
+    +find(int id) Company | None
+    +find_all() list[Company]
+    +update(Company company) Exception | None
+    +delete(int id) Exception | None
+  }
+  class CompanyInfo {
+    -int id
+    -str name
+    -str business
+    -str mvv
+    -str required_skill
+    -str location
+    -str benefit
+    -str applying_motivation
+    +CompanyInfo(Company company)
+    +toEntity() Company
+  }
+  class Company {
+    -int id
+    -str name
+    -str business
+    -str mvv
+    -str required_skill
+    -str location
+    -str benefit
+    -str applying_motivation
+    +Company(name)
+    +Company(int id, str name, str business, str mvv, str required_skill, str location, str benefit, str applying_motivation)
+    +get_id()
+    +get_name()
+    +get_business()
+    +get_mvv()
+    +get_required_skill()
+    +get_location()
+    +get_benefit()
+    +get_applying_motivation()
+  }
+  <<interface>> CompanyRepository
+  <<interface>> CompanyInfoService
+  CompanyInfoController..>CompanyInfoService : 依存
+  CompanyInfoService..|>CompanyInfoServiceImpl : 実現
+  CompanyInfoServiceImpl..>CompanyRepository : 依存
+  CompanyRepository..|>CompanyRepositoryImpl : 実現
+  CompanyInfo--Company : 関連
+  CompanyInfoController--CompanyInfo : 関連
+  CompanyInfoService--CompanyInfo : 関連
+  CompanyInfoServiceImpl--CompanyInfo : 関連
+  CompanyRepository--Company : 関連
+  CompanyRepositoryImpl--Company : 関連
+```
+
+</details>
+
+<details><summary>企業との接触情報管理</summary>
+
+```Mermaid
+---
+title: 企業との接触情報管理
+---
+classDiagram
+  class CompanyConnectionController {
+    -CompanyConnectionService company_connection_service
+    +CompanyConnectionController(CompanyConnectionService company_connection_service)
+    +create() werkzeug.wrappers.response.Response
+    +show_list() str
+    +update(ImmutableMultiDict[str, str] form) werkzeug.wrappers.response.Response
+    +delete(int id) werkzeug.wrappers.response.Response
+  }
+  class CompanyConnectionService {
+    +create(CompanyConnection company_connection) str | None
+    +make_list() list[CompanyConnectionForm]
+    +update(CompanyConnectionForm company_connection_form) str | None
+    +delete(int id) str | None
+  }
+  class CompanyConnectionServiceImpl {
+    -CompanyConnectionRepository company_connection_repository
+    +CompanyConnectionServiceImpl(CompanyConnectionRepository company_connection_repository)
+    +create(CompanyConnectionForm company_connection_form) str | None
+    +make_list() list[CompanyConnectionForm]
+    +update(CompanyConnectionForm company_connection_form) str | None
+    +delete(int id) str | None
+  }
+  class CompanyConnectionRepository {
+    +create(CompanyConnection company_connection) CompanyConnection | None
+    +find_all() list[CompanyConnection]
+    +update(CompanyConnection company_connection) Exception | None
+    +delete(int id) Exception | None
+  }
+  class CompanyConnectionRepositoryImpl {
+    +CompanyConnectionRepositoryImpl()
+    +create(CompanyConnection company_connection) CompanyConnection | None
+    +find_all() list[CompanyConnection]
+    +update(CompanyConnection company_connection) Exception | None
+    +delete(int id) Exception | None
+  }
+  class CompanyConnectionForm {
+    -int id
+    -int company_id
+    -date connection_date
+    -str way
+    -str employee
+    -str content
+    -str route
+    -int company_id
+    -date connection_date
+    -str way
+    -str employee
+    -str content
+    -str route
+    +CompanyConnectionForm(company_id)
+    +CompanyConnectionForm(CompanyConnection companyConnection)
+    +toEntity() CompanyConnection
+  }
+  class CompanyConnection {
+    -int id
+    -int company_id
+    -date connection_date
+    -str way
+    -str employee
+    -str content
+    -str route
+    -int company_id
+    -date connection_date
+    -str way
+    -str employee
+    -str content
+    -str route
+    +CompanyConnection(int id, int company_id, date connection_date, str way, str employee, str content, str route, int company_id, date connection_date, str way, str employee, str content, str route)
+    +get_id()
+    +get_company_id()
+    +get_connection_date()
+    +get_way()
+    +get_employee()
+    +get_content()
+    +get_route()
+    +get_company_id()
+    +get_connection_date()
+    +get_way()
+    +get_employee()
+    +get_content()
+    +get_route()
+  }
+  <<interface>> CompanyConnectionRepository
+  <<interface>> CompanyConnectionService
+  CompanyConnectionController..>CompanyConnectionService : 依存
+  CompanyConnectionService..|>CompanyConnectionServiceImpl : 実現
+  CompanyConnectionServiceImpl..>CompanyConnectionRepository : 依存
+  CompanyConnectionRepository..|>CompanyConnectionRepositoryImpl : 実現
+  CompanyConnectionController--CompanyConnectionForm : 関連
+  CompanyConnectionService--CompanyConnectionForm : 関連
+  CompanyConnectionServiceImpl--CompanyConnectionForm : 関連
+  CompanyConnectionRepository--CompanyConnection : 関連
+  CompanyConnectionRepositoryImpl--CompanyConnection : 関連
+  CompanyConnectionForm--CompanyConnection : 関連
+```
+
+</details>
 
 #### ER図
 
