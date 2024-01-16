@@ -24,6 +24,6 @@ services:
       - MYSQL_PASSWORD=docker
       - TZ=Asia/Tokyo
     ports:
-      - 3306:3306
+      - 3307:3306
     volumes:
       - ./db/data:/var/lib/mysql
