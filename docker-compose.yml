@@ -1,0 +1,29 @@
+version: "2"
+services:
+  app:
+    build:
+      context: ./python
+    container_name: python
+    ports:
+      - "5001:5000"
+    volumes:
+      - "./python:/project"
+    tty: true
+    environment:
+      FLASK_APP: "./app/application.py"
+      FLASK_DEBUG: "1"
+    command: "flask run --debugger --reload --host 0.0.0.0"
+  db:
+    build:
+      context: ./db
+    container_name: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=job_collection
+      - MYSQL_USER=docker
+      - MYSQL_PASSWORD=docker
+      - TZ=Asia/Tokyo
+    ports:
+      - 3306:3306
+    volumes:
+      - ./db/data:/var/lib/mysql

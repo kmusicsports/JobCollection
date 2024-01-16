@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/companyList.css') }}">
+{% endblock %}
+
+{% block title %}ホーム - アプリ名{% endblock %}
+
+{% block content %}
+<h1>{{ context.message }}</h1>
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='js/companyList.js') }}"></script>
+{% endblock %}
