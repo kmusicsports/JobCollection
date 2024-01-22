@@ -12,6 +12,7 @@ services:
     environment:
       FLASK_APP: "./app/application.py"
       FLASK_DEBUG: "1"
+      DATABASE_URI: "mysql+pymysql://docker:docker@host.docker.internal:3307/job_collection"
     command: "flask run --debugger --reload --host 0.0.0.0"
   db:
     build:
