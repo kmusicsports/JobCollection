@@ -472,18 +472,21 @@ erDiagram
 │   └── pull_request_template.md       プルリクエストのテンプレートファイル
 │   python                             Python関連
 │   ├── app                            アプリ関連
+│   │   ├── config                     設定
 │   │   ├── controller                 制御、リクエストマッピング
-│   │   ├── entity                     テーブルと紐づくモデル
-│   │   ├── model                      表示用のモデル
-│   │   ├── repository                 データ操作
+│   │   ├── view_model                 表示用のモデル
 │   │   ├── service                    ビジネスロジック（アプリケーションビジネスルール）
+│   │   ├── repository                 データ操作
+│   │   ├── entity                     テーブルと紐づくモデル
 │   │   ├── static                     静的ファイル群
 │   │   │   ├── css                    CSSファイル郡
 │   │   │   └── js                     JavaScriptファイル群
 │   │   ├── templates                  HTMLファイル郡
 │   │   │   ├── ・・・
 │   │   │   └── base.html              全HTMLのベースになるHTML
-│   │   └── application.py             初期設定（Flaskインスタンス、DBなど）
+│   │   ├── __init__.py                初期設定
+│   │   ├── application.py             Flaskインスタンス管理
+│   │   └── database.py                SQLAlchemyインスタンス管理
 │   ├── Dockerfile                     Python用Docker設定ファイル
 │   └── requirements.txt               pipパッケージ一覧
 ├── .editorconfig                      コーディングスタイル設定ファイル
@@ -505,6 +508,7 @@ erDiagram
 ### ビルド＆起動
 
 ```bash
+docker compose build --no-cache  # 2回目以降、ビルドし直したい場合
 docker compose up
 ```
 
