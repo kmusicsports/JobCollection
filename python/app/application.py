@@ -1,5 +1,3 @@
-from flask import Flask
-from controller.company_controller import company_page
+from app import create_app
 
-app = Flask(__name__)
-app.register_blueprint(company_page)
+app = create_app()
