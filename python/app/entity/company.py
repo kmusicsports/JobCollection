@@ -1,4 +1,4 @@
-# from sqlalchemy import Model, Column, Integer, String, Text
+from sqlalchemy import Column, Integer, String, Text
 
 from app.database import db
 
@@ -6,19 +6,19 @@ from app.database import db
 class Company(db.Model):
     __tablename__ = 'company'
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(100), nullable=False)
-    business = db.Column(db.Text)
-    mvv = db.Column(db.Text)
-    required_skill = db.Column(db.Text)
-    location = db.Column(db.Text)
-    benefit = db.Column(db.Text)
-    applying_motivation = db.Column(db.Text)
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String(100), nullable=False)
+    business = Column(Text)
+    mvv = Column(Text)
+    required_skill = Column(Text)
+    location = Column(Text)
+    benefit = Column(Text)
+    applying_motivation = Column(Text)
 
     def __init__(
         self,
-        name: str,
         id: int | None = None,
+        name: str = "",
         business: str | None = None,
         mvv: str | None = None,
         required_skill: str | None = None,
@@ -26,6 +26,7 @@ class Company(db.Model):
         benefit: str | None = None,
         applying_motivation: str | None = None
     ):
+        self.id = id
         self.name = name
         self.business = business
         self.mvv = mvv

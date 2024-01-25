@@ -22,7 +22,9 @@ def create() -> Response:
     else:
         flash(ERROR_MESSAGE, ERROR_CLASS)
 
-    return redirect(url_for("company_page.show_detail", id=company_name.id))
+    return redirect(
+        url_for("company_page.show_detail", id=company_name.get_id())
+    )
 
 
 @company_page.route("/list")
