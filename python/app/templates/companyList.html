@@ -1,15 +1,43 @@
 {% extends 'base.html' %}
 
-{% block stylesheet %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/companyList.css') }}">
-{% endblock %}
-
-{% block title %}ホーム - アプリ名{% endblock %}
+{% block title %}企業一覧 - 就集{% endblock %}
 
 {% block content %}
-<h1>{{ context.message }}</h1>
-{% endblock %}
+<h1 class="text-center mt-5">企業一覧</h1>
 
-{% block script %}
-<script src="{{ url_for('static', filename='js/companyList.js') }}"></script>
+<div class="d-grid gap-2 col-10 mx-auto">
+  <div class="text-end">
+    <a href="#" class="fs-5 link-info link-underline-opacity-0 link-underline-opacity-75-hover" data-bs-toggle="modal" data-bs-target="#modalCreateCompany">追加</a>
+  </div>
+
+  {% for company in context.companies_name %}
+  <a href="{{ url_for('company_page.show_detail', id=company.id) }}" class="btn btn-outline-dark btn-lg mb-3" role="button">{{ company.name }}</a>
+  {% endfor %}
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalCreateCompany" tabindex="-1" aria-labelledby="modalLabelCreateCompany" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form action="{{ url_for('company_page.create') }}" method="post">
+        <div class="modal-header">
+          <h5 class="modal-title">企業の登録</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="inputCompanyName" class="form-label">企業名</label>
+            <input type="text" class="form-control" id="inputCompanyName" name="companyName" placeholder="例：株式会社〇〇" maxlength="100" required>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+          <button type="submit" class="btn btn-primary">登録</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 {% endblock %}

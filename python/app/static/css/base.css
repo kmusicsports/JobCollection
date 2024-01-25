@@ -1,0 +1,7 @@
+.btn-outline-dark {
+  height: 80px;
+  font-size: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
