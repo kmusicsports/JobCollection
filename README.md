@@ -25,7 +25,7 @@
       - [4.1.1.2. 企業の詳細画面](#4112-企業の詳細画面)
       - [4.1.1.3. 企業の基本情報閲覧画面](#4113-企業の基本情報閲覧画面)
       - [4.1.1.4. 企業との接触情報閲覧画面](#4114-企業との接触情報閲覧画面)
-      - [4.1.1.5. 情報の登録/編集フォーム・ダイアログ（項目が変わるだけ）](#4115-情報の登録編集フォームダイアログ項目が変わるだけ)
+      - [4.1.1.5. 情報の登録/編集フォーム・ダイアログ（フォームによって項目が変わる）](#4115-情報の登録編集フォームダイアログフォームによって項目が変わる)
       - [4.1.1.6. 情報の削除確認ダイアログ](#4116-情報の削除確認ダイアログ)
     - [4.1.2. ER図](#412-er図)
     - [4.1.3. テーブル定義](#413-テーブル定義)
@@ -209,7 +209,7 @@
 | 1/1 | カジュアル面談 | 山田太郎さん、バックエンドエンジニア、A事業部 | 良かった。 | リクナビ | 編集 | 削除 |
 | 1/2 | OB訪問 |  | 楽しかった。 | 大学 | 編集 | 削除 |
 
-##### 4.1.1.5. 情報の登録/編集フォーム・ダイアログ（項目が変わるだけ）
+##### 4.1.1.5. 情報の登録/編集フォーム・ダイアログ（フォームによって項目が変わる）
 
 本フォーム・ダイアログは以下の要件を満たす。イメージ図を下記に示す。
 
@@ -298,6 +298,7 @@ erDiagram
 #### 4.1.4. アーキテクチャ
 
 アーキテクチャは、「MVC + Service + Repository」を選択した。下記にアーキテクチャに関わるPythonのディレクトリ構成を示す。
+viewについては、テンプレートエンジンが担当するので、実装時にはテンプレートエンジン用のディレクトリになっている。
 
 ```markdown
 app
@@ -314,14 +315,20 @@ app
 - アプリケーションビジネスルール: システムであるがゆえに発生するビジネスルール
 - エンタープライズビジネスルール: システムに関係なく存在している業務上のビジネスルール
 
-このアーキテクチャを選択した理由としては、
+このアーキテクチャ・ディレクトリ構成を選択した理由としては、以下の通りである。
+
+1. 開発チームが2人のみで、アプリもシンプルで小規模なものなので、他のアーキテクチャだと過剰だと考え、MVCを選択した。
+2. 講義の中でもあったように、現代のMVCでは、Controllerが古典MVCにおけるModelの役割（ロジック）も含むことになると思われるが、単一責任の原則(SRP)の観点から、Controllerには複数の役割（ロジック）を持たせたくないと考え、ビジネスロジックの役割をServiceに、データ操作の役割をRepositoryに分割した。
+3. テーブルと紐付けるモデルと表示用のモデルは、データと必要な処理が異なるため、これもSRPの観点から別々のクラスに分割した。
 
 #### 4.1.5. クラス図
 
-以下に各機能に関するクラス図を示す。ただし、コンストラクタおよびクラス変数・メンバ変数については、Pythonでの書き方にはなっていないので、実装時とは少し異なっている。また、Controllerにおけるメソッドの返り値は下記に該当する。
+以下に各機能に関するクラス図を示す。ただし、コンストラクタおよびクラス変数・メンバ変数など、Pythonでの書き方にはなっていないので、実装時とは少し異なっている。また、Controllerにおけるメソッドの返り値は下記に該当する。
 
 - Response: リダイレクト
 - str: テンプレートレンダリング
+
+基本的には、前節で示したアーキテクチャに則ったクラス構成になっている。ServiceとRepositoryについては、オープン・クローズドの原則(OCP)の観点から、インターフェースを用意し、それを実装した(具象)クラスには依存させずに、インターフェースに依存させるようにした。
 
 ```mermaid
 ---
@@ -369,6 +376,7 @@ classDiagram
     +CompanyName()
     +CompanyName(Company company)
     +to_entity() Company
+    +get_id() int
   }
   class Company {
     -int id
@@ -502,28 +510,28 @@ classDiagram
     +delete(int id) Response
   }
   class CompanyConnectionService {
-    +create(CompanyConnection company_connection) CompanyConnectionForm | None
-    +make_list() list[CompanyConnectionForm]
-    +update(CompanyConnectionForm company_connection_form) CompanyConnectionForm | None
+    +create(ImmutableMultiDict[str, str] form) CompanyConnectionForm | None
+    +make_list(int company_id) list[CompanyConnectionForm]
+    +update(ImmutableMultiDict[str, str] form) CompanyConnectionForm | None
     +delete(int id) bool
   }
   class CompanyConnectionServiceImpl {
     -CompanyConnectionRepository company_connection_repository
     +CompanyConnectionServiceImpl(CompanyConnectionRepository company_connection_repository)
-    +create(CompanyConnection company_connection) CompanyConnectionForm | None
-    +make_list() list[CompanyConnectionForm]
-    +update(CompanyConnectionForm company_connection_form) CompanyConnectionForm | None
+    +create(ImmutableMultiDict[str, str] form) CompanyConnectionForm | None
+    +make_list(int company_id) list[CompanyConnectionForm]
+    +update(ImmutableMultiDict[str, str] form) CompanyConnectionForm | None
     +delete(int id) bool
   }
   class CompanyConnectionRepository {
     +save(CompanyConnection company_connection) CompanyConnection | None
-    +find_all() list[CompanyConnection]
+    +find_by_company_id(int company_id) list[CompanyConnection]
     +delete_by_id(int id) bool
   }
   class CompanyConnectionRepositoryImpl {
     +CompanyConnectionRepositoryImpl()
     +save(CompanyConnection company_connection) CompanyConnection | None
-    +find_all() list[CompanyConnection]
+    +find_by_company_id(int company_id) list[CompanyConnection]
     +delete_by_id(int id) bool
   }
   class CompanyConnectionForm {
@@ -540,7 +548,7 @@ classDiagram
     -str employee
     -str content
     -str route
-    +CompanyConnectionForm(company_id)
+    +CompanyConnectionForm(int company_id)
     +CompanyConnectionForm(CompanyConnection companyConnection)
     +toEntity() CompanyConnection
   }
@@ -661,7 +669,7 @@ docker compose up
 
 ### 4.6. アプリへのアクセス
 
-起動が完了すると、ブラウザでアプリのURL[http://localhost:5001](http://localhost:5001)へアクセスできる。
+起動が完了すると、ブラウザでアプリのURL([http://localhost:5001](http://localhost:5001))へアクセスできる。
 
 ### 4.7. データベースへのアクセス
 

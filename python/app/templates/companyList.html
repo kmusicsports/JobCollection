@@ -7,11 +7,15 @@
 
 <div class="d-grid gap-2 col-10 mx-auto">
   <div class="text-end">
-    <a href="#" class="fs-5 link-info link-underline-opacity-0 link-underline-opacity-75-hover" data-bs-toggle="modal" data-bs-target="#modalCreateCompany">追加</a>
+    <a href="#" class="fs-5 link-info link-underline-opacity-0 link-underline-opacity-75-hover" data-bs-toggle="modal" data-bs-target="#modalCreateCompany">
+      追加
+    </a>
   </div>
 
   {% for company in context.companies_name %}
-  <a href="{{ url_for('company_page.show_detail', id=company.id) }}" class="btn btn-outline-dark btn-lg mb-3" role="button">{{ company.name }}</a>
+  <a href="{{ url_for('company_page.show_detail', id=company.id) }}" class="btn btn-outline-dark btn-lg mb-3" role="button">
+    {{ company.name }}
+  </a>
   {% endfor %}
 </div>
 
@@ -28,12 +32,14 @@
         <div class="modal-body">
           <div class="mb-3">
             <label for="inputCompanyName" class="form-label">企業名</label>
-            <input type="text" class="form-control" id="inputCompanyName" name="companyName" placeholder="例：株式会社〇〇" maxlength="100" required>
+            <input type="text" class="form-control" id="inputCompanyName" name="companyName" placeholder="例：株式会社〇〇" maxlength="100" required />
           </div>
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            キャンセル
+          </button>
           <button type="submit" class="btn btn-primary">登録</button>
         </div>
       </form>
