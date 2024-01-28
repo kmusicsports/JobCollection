@@ -15,7 +15,6 @@ class CompanyServiceImpl(CompanyService):
         if "companyName" not in form:
             return False
 
-        print(type(form))
         company = Company(name=form["companyName"])
         company = self.company_repository.save(company)
 
