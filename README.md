@@ -127,6 +127,18 @@
 
 #### 3.3.3. 機能使用時のスクリーンショット
 
+![企業との接触情報一覧表示機能（スクリーンショット）](docs/images/screenshots/companyConnectionList.png)
+*図: 企業との接触情報一覧表示機能（スクリーンショット）*
+
+![企業との接触情報登録機能（スクリーンショット）](docs/images/screenshots/formCreateConnection.png)
+*図: 企業との接触情報登録機能（スクリーンショット）*
+
+![企業との接触情報編集機能（スクリーンショット）](docs/images/screenshots/formUpdateConnection.png)
+*図: 企業との接触情報編集機能（スクリーンショット）*
+
+![企業との接触情報削除機能（スクリーンショット）](docs/images/screenshots/dialogDeleteConnection.png)
+*図: 企業との接触情報削除機能（スクリーンショット）*
+
 ### 3.4. 今後実装予定の機能一覧
 
 - 定形情報の管理機能（自己紹介、自己PR、ES、ガクチカなど）
@@ -206,8 +218,8 @@
 表: 企業との接触情報閲覧画面における表の例
 | 日付 | 接触方法 | 担当者・接触した社員の情報 | 内容 | 経由 |  |  |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1/1 | カジュアル面談 | 山田太郎さん、バックエンドエンジニア、A事業部 | 良かった。 | リクナビ | 編集 | 削除 |
-| 1/2 | OB訪問 |  | 楽しかった。 | 大学 | 編集 | 削除 |
+| 2024/01/01 | カジュアル面談 | 山田太郎さん、バックエンドエンジニア、A事業部 | 良かった。 | リクナビ | 編集 | 削除 |
+| 2024/01/02 | OB訪問 |  | 楽しかった。 | 大学 | 編集 | 削除 |
 
 ##### 4.1.1.5. 情報の登録/編集フォーム・ダイアログ（フォームによって項目が変わる）
 
@@ -288,7 +300,7 @@ erDiagram
 | No | 論理名(カラム名) | 物理名(内容) | データ型 | PK | FK | Not Null | Default | Unique |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 | id | 接触情報のID | INT | 〇 |  | 〇 | AUTO_INCREMENT |  |
-| 2 | company_id | 企業のID | INT |  | 〇 | 〇 |  | 〇 |
+| 2 | company_id | 企業のID | INT |  | 〇 | 〇 |  |  |
 | 3 | company_date | 接触日時 | DATE |  |  | 〇 |  |  |
 | 4 | way | 接触方法 | TEXT |  |  |  |  |  |
 | 5 | employee | 担当者、接触した社員の情報 | TEXT |  |  |  |  |  |
@@ -373,7 +385,7 @@ classDiagram
   class CompanyName {
     -int id
     -str name
-    +CompanyName()
+    +CompanyName(int name)
     +CompanyName(Company company)
     +to_entity() Company
     +get_id() int
@@ -526,12 +538,14 @@ classDiagram
   class CompanyConnectionRepository {
     +save(CompanyConnection company_connection) CompanyConnection | None
     +find_by_company_id(int company_id) list[CompanyConnection]
+    +find_by_id(int id) CompanyConnection | None
     +delete_by_id(int id) bool
   }
   class CompanyConnectionRepositoryImpl {
     +CompanyConnectionRepositoryImpl()
     +save(CompanyConnection company_connection) CompanyConnection | None
     +find_by_company_id(int company_id) list[CompanyConnection]
+    +find_by_id(int id) CompanyConnection | None
     +delete_by_id(int id) bool
   }
   class CompanyConnectionForm {
