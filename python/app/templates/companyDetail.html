@@ -17,7 +17,9 @@
     <a href="#" class="fs-5 link-danger link-underline-opacity-0 link-underline-opacity-75-hover" data-bs-toggle="modal" data-bs-target="#modalDeleteCompany">削除</a>
   </div>
 
-  <a href="#" class="btn btn-outline-dark btn-lg mb-3" role="button">基本情報</a>
+<!-- ここの処理が分かりません… -->
+<!-- ID取得方法が不明です -->
+  <a href="{{ url_for('company_info_page.show', id=company_name.id) }}" class="btn btn-outline-dark btn-lg mb-3" role="button">基本情報</a>
   <a href="#" class="btn btn-outline-dark btn-lg mb-3" role="button">企業との接触情報</a>
 </div>
 
