@@ -1,12 +1,19 @@
+from __future__ import annotations
 from app.entity.company import Company
 
 
 class CompanyName():
 
-    def __init__(self, company: Company | None = None):
-        if company:
-            self.id = company.get_id()
-            self.name = company.get_name()
+    def __init__(self, id: int | None = None, name: str = ""):
+        self.id = id
+        self.name = name
+
+    @classmethod
+    def from_entity(cls, company: Company) -> CompanyName:
+        return cls(
+            id=company.get_id(),
+            name=company.get_name()
+        )
 
     def to_entity(self) -> Company:
         return Company(id=self.id, name=self.name)

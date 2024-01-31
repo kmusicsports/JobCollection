@@ -1,8 +1,8 @@
 from werkzeug.datastructures.structures import ImmutableMultiDict
 
+from .company_service import CompanyService
 from app.entity.company import Company
 from app.view_model.company_name import CompanyName
-from .company_service import CompanyService
 from app.repository.company_repository import CompanyRepository
 
 
@@ -12,27 +12,32 @@ class CompanyServiceImpl(CompanyService):
         self.company_repository = company_repository
 
     def create(self, form: ImmutableMultiDict[str, str]) -> CompanyName | None:
-        if "companyName" not in form:
-            return False
+        if "name" not in form:
+            print("Error: name is not exist")
+            return None
 
-        company = Company(name=form["companyName"])
+        company: Company = CompanyName(name=form["name"]).to_entity()
         company = self.company_repository.save(company)
 
         if company:
-            return CompanyName(company)
+            return CompanyName.from_entity(company)
 
         return None
 
     def make_list(self) -> list[CompanyName]:
         companies: list[Company] = self.company_repository.find_all()
-        companies_name = [CompanyName(company) for company in companies]
+        companies_name: list[CompanyName] = []
+
+        for company in companies:
+            companies_name.append(CompanyName.from_entity(company))
+
         return companies_name
 
     def find(self, id: int) -> CompanyName | None:
         company = self.company_repository.find_by_id(id)
 
         if company:
-            return CompanyName(company)
+            return CompanyName.from_entity(company)
 
         return None
 
