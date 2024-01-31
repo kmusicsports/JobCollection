@@ -7,12 +7,12 @@ class CompanyInfo():
         if company:
             self.id = company.get_id()
             self.name = company.get_name()
-            self.business = '' if company.get_business() is None else company.get_business()
-            self.mvv = '' if company.get_mvv() is None else company.get_mvv()
-            self.required_skill = '' if company.get_required_skill() is None else company.get_required_skill()
-            self.location = '' if company.get_location() is None else company.get_location()
-            self.benefit = '' if company.get_benefit() is None else company.get_benefit()
-            self.applying_motivation = '' if company.get_applying_motivation() is None else company.get_applying_motivation()
+            self.business = company.get_business()
+            self.mvv = company.get_mvv()
+            self.required_skill = company.get_required_skill()
+            self.location = company.get_location()
+            self.benefit = company.get_benefit()
+            self.applying_motivation = company.get_applying_motivation()
 
     def to_entity(self) -> Company:
         return Company(
