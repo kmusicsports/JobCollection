@@ -1,0 +1,18 @@
+#content-column,
+#employee-column {
+  min-width: 224px;
+}
+
+#date-column {
+  min-width: 108px;
+}
+
+#way-column {
+  min-width: 80px;
+}
+
+#route-column,
+#edit-column,
+#delete-column {
+  min-width: 48px;
+}

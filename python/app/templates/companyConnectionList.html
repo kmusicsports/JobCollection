@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% block title %}企業との接触情報 - 就集{% endblock %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/companyConnectionList.css') }}" />
+{% endblock %}
+
+{% block content %}
+<nav class="breadcrumb-nav m-3" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ url_for('company_page.show_list') }}">企業一覧</a></li>
+    <li class="breadcrumb-item"><a href="{{ url_for('company_page.show_detail', id=context.company_name.id) }}">企業詳細</a></li>
+    <li class="breadcrumb-item active" aria-current="page">企業との接触情報</li>
+  </ol>
+</nav>
+
+<h1 class="text-center mt-5">{{ context.company_name.name }}との接触情報</h1>
+
+<div class="d-grid gap-2 col-10 mx-auto">
+  <div class="text-end">
+    <a href="#" id="linkAddConnection" class="fs-5 link-info link-underline-opacity-0 link-underline-opacity-75-hover" data-bs-toggle="modal" data-bs-target="#modalCompanyConnectionForm">
+      追加
+    </a>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th id="date-column" scope="col">日付</th>
+          <th id="way-column" scope="col">接触方法</th>
+          <th id="employee-column" scope="col">担当者・接触した社員の情報</th>
+          <th id="content-column" scope="col">内容</th>
+          <th id="route-column" scope="col">経由</th>
+          <th id="edit-column" scope="col"></th>
+          <th id="delete-column" scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for company_connection in context.company_connection_forms %}
+        <tr>
+          <td class="d-none company-connection-id"></td>
+          <td>{{ company_connection.connection_date }}</td>
+          <td>{{ company_connection.way }}</td>
+          <td>{{ company_connection.employee }}</td>
+          <td>{{ company_connection.content }}</td>
+          <td>{{ company_connection.route }}</td>
+          <td>
+            <a href="#" onclick="onClickLinkEditConnection(event, '{{ company_connection.id }}')" class="link-edit-connection link-underline link-underline-opacity-0 link-underline-opacity-75-hover" data-bs-toggle="modal" data-bs-target="#modalCompanyConnectionForm">
+              編集
+            </a>
+          </td>
+          <td>
+            <a href="#" onclick="onClickLinkRemoveConnection(event, '{{ company_connection.id }}')" class="link-underline link-underline-opacity-0 link-underline-opacity-75-hover" data-bs-toggle="modal" data-bs-target="#modalDeleteCompanyConnection">
+              削除
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 登録・編集フォームModal -->
+<div class="modal fade" id="modalCompanyConnectionForm" tabindex="-1" aria-labelledby="modalLabelCompanyConnectionForm" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content">
+      <form action="#" method="post">
+        <div class="modal-header">
+          <h5 class="modal-title">企業との接触情報の登録</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="mb-3">
+            <input type="hidden" id="inputId" name="id" />
+            <input type="hidden" id="inputCompanyId" name="company_id" value="{{ context.company_name.id }}" />
+
+            <label for="inputConnectionDate" class="form-label">日付</label>
+            <input type="date" class="form-control mb-3" id="inputConnectionDate" name="connection_date" required />
+
+            <label for="inputWay" class="form-label">接触方法</label>
+            <textarea type="text" class="form-control mb-3" id="inputWay" name="way" placeholder="例: 企業説明会、カジュアル面談、1次面接、技術面接、OB訪問、インターン"></textarea>
+
+            <label for="inputEmployee" class="form-label">担当者・接触した社員の情報</label>
+            <textarea type="text" class="form-control mb-3" id="inputEmployee" name="employee" placeholder="例: 氏名、所属、職種、経歴、特徴・印象"></textarea>
+
+            <label for="inputContent" class="form-label">内容</label>
+            <textarea type="text" class="form-control mb-3" id="inputContent" name="content" placeholder="例: 聞かれたこと、得られた情報、感想・反省" required></textarea>
+
+            <label for="inputRoute" class="form-label">経由</label>
+            <textarea type="text" class="form-control mb-3" id="inputRoute" name="route" placeholder="例: 就活サイト、人材紹介会社、大学、知人、公式"></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+          <button type="submit" class="btn btn-primary d-none" id="buttonCreateConnection" formaction="{{ url_for('company_connection_page.create', company_id=context.company_name.id) }}">
+            登録
+          </button>
+          <button type="submit" class="btn btn-primary d-none" id="buttonUpdateConnection" formaction="{{ url_for('company_connection_page.update', company_id=context.company_name.id) }}">
+            更新
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- 削除確認Modal -->
+<div class="modal fade" id="modalDeleteCompanyConnection" tabindex="-1" aria-labelledby="modalLabelDeleteCompanyConnection" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">接触情報の削除確認</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>本当に削除しますか？</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+        <a href="#" id="linkDeleteConnection" class="btn btn-danger" role="button">削除</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='js/companyConnectionList.js') }}"></script>
+{% endblock %}
