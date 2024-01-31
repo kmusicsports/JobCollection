@@ -11,8 +11,8 @@ CREATE TABLE company (
 
 CREATE TABLE company_connection (
   id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-  company_id INT NOT NULL UNIQUE,
-  company_date DATE NOT NULL,
+  company_id INT NOT NULL,
+  connection_date DATE NOT NULL,
   way TEXT,
   employee TEXT,
   content TEXT NOT NULL,

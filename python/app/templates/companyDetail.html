@@ -3,7 +3,7 @@
 {% block title %}企業詳細 - 就集{% endblock %}
 
 {% block content %}
-<nav class="m-3" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+<nav class="breadcrumb-nav m-3" aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ url_for('company_page.show_list') }}">企業一覧</a></li>
     <li class="breadcrumb-item active" aria-current="page">企業詳細</li>
@@ -14,11 +14,15 @@
 
 <div class="d-grid gap-2 col-10 mx-auto">
   <div class="text-end">
-    <a href="#" class="fs-5 link-danger link-underline-opacity-0 link-underline-opacity-75-hover" data-bs-toggle="modal" data-bs-target="#modalDeleteCompany">削除</a>
+    <a href="#" class="fs-5 link-danger link-underline-opacity-0 link-underline-opacity-75-hover" data-bs-toggle="modal" data-bs-target="#modalDeleteCompany">
+      削除
+    </a>
   </div>
 
   <a href="#" class="btn btn-outline-dark btn-lg mb-3" role="button">基本情報</a>
-  <a href="#" class="btn btn-outline-dark btn-lg mb-3" role="button">企業との接触情報</a>
+  <a href="{{ url_for('company_connection_page.show_list', company_id=context.company_name.id) }}" class="btn btn-outline-dark btn-lg mb-3" role="button">
+    企業との接触情報
+  </a>
 </div>
 
 <!-- Modal -->
@@ -34,7 +38,9 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
-        <a href="{{ url_for('company_page.delete', id=context.company_name.id) }}" class="btn btn-danger" role="button">削除</a>
+        <a href="{{ url_for('company_page.delete', id=context.company_name.id) }}" class="btn btn-danger" role="button">
+          削除
+        </a>
       </div>
     </div>
   </div>
