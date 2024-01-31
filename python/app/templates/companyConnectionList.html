@@ -42,10 +42,10 @@
         <tr>
           <td class="d-none company-connection-id"></td>
           <td>{{ company_connection.connection_date }}</td>
-          <td>{{ company_connection.way }}</td>
-          <td>{{ company_connection.employee }}</td>
+          <td>{{ company_connection.way if company_connection.way else '' }}</td>
+          <td>{{ company_connection.employee if company_connection.employee else '' }}</td>
           <td>{{ company_connection.content }}</td>
-          <td>{{ company_connection.route }}</td>
+          <td>{{ company_connection.route if company_connection.route else '' }}</td>
           <td>
             <a href="#" onclick="onClickLinkEditConnection(event, '{{ company_connection.id }}')" class="link-edit-connection link-underline link-underline-opacity-0 link-underline-opacity-75-hover" data-bs-toggle="modal" data-bs-target="#modalCompanyConnectionForm">
               編集
