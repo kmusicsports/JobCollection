@@ -103,6 +103,17 @@
 - 編集
 
 #### 3.2.3. 機能使用時のスクリーンショット
+![企業の一覧表示機能（スクリーンショット）](docs/images/screenshots/showCompanyInfo.png)
+*図: 企業の基本情報の一覧表示機能（スクリーンショット）*
+
+![企業の登録機能（スクリーンショット）](docs/images/screenshots/formUpdateCompanyInfo1.png)
+*図: 企業の基本情報の編集機能1（スクリーンショット）*
+
+![企業の登録機能（スクリーンショット）](docs/images/screenshots/formUpdateCompanyInfo2.png)
+*図: 企業の基本情報の編集機能2（スクリーンショット）*
+
+![企業の登録機能（スクリーンショット）](docs/images/screenshots/resultUpdateCompanyInfo.png)
+*図: 企業の基本情報の更新結果（スクリーンショット）*
 
 ### 3.3. 企業との接触情報管理機能
 
@@ -287,7 +298,7 @@ erDiagram
 | No | 論理名(カラム名) | 物理名(内容) | データ型 | PK | FK | Not Null | Default | Unique |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 | id | 企業のID | INT | 〇 |  | 〇 | AUTO_INCREMENT |  |
-| 2 | name | 企業名 | VARCHAR |  |  | 〇 |  |  |
+| 2 | name | 企業名 | VARCHAR(100) |  |  | 〇 |  |  |
 | 3 | business | 業務内容 | TEXT |  |  |  |  |  |
 | 4 | mvv | 経営理念 | TEXT |  |  |  |  |  |
 | 5 | required_skill | 求められているスキル | TEXT |  |  |  |  |  |
@@ -435,7 +446,7 @@ classDiagram
     -CompanyInfoService company_info_service
     +CompanyInfoController(CompanyInfoService company_info_service)
     +show(int id) str
-    +update(ImmutableMultiDict[str, str] form) Response
+    +update(int id) Response
   }
   class CompanyInfoService {
     +find(int id) CompanyInfo | None
