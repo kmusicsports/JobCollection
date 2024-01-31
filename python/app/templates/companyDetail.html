@@ -19,7 +19,9 @@
 
 <!-- ここの処理が分かりません… -->
 <!-- ID取得方法が不明です -->
-  <a href="{{ url_for('company_info_page.show', id=company_name.id) }}" class="btn btn-outline-dark btn-lg mb-3" role="button">基本情報</a>
+  <a href="{{ url_for('company_info_page.show', id=context.company_name.id) }}" class="btn btn-outline-dark btn-lg mb-3" role="button">
+    基本情報
+  </a>
   <a href="#" class="btn btn-outline-dark btn-lg mb-3" role="button">企業との接触情報</a>
 </div>
 

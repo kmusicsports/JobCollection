@@ -1,98 +1,95 @@
 {% extends 'base.html' %}
 
-{% block title %}企業基本情報画面 - 就集{% endblock %}
+{% block title %}企業の基本情報 - 就集{% endblock %}
 
 {% block content %}
 <!-- 画面上部のナビゲータ -->
 <nav class="m-3" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ url_for('company_page.show_list') }}">企業一覧</a></li>
-    <li class="breadcrumb-item"><a href="{{ url_for('company_page.show_list') }}"></a>企業詳細</li>
+    <li class="breadcrumb-item"><a href="{{ url_for('company_page.show_detail', id=context.company_info.id ) }}">企業詳細</a></li>
     <li class="breadcrumb-item active" aria-current="page">基本情報</li>
   </ol>
 </nav>
 
-<!-- 編集ボタン -->
+<!-- 画面のタイトル -->
+<h1 class="text-center mt-5">{{ context.company_info.name }}</h1>
+
+<!-- 基本情報 -->
 <div class="d-grid gap-2 col-10 mx-auto">
+  <!-- 編集ボタン -->
   <div class="text-end">
     <a href="#" class="fs-5 link-info link-underline-opacity-0 link-underline-opacity-75-hover" data-bs-toggle="modal" data-bs-target="#modalEditInfoCompany">
       編集
     </a>
   </div>
 
-  {% for company in context.companies_name %}
-  <a href="{{ url_for('company_page.show_detail', id=company.id) }}" class="btn btn-outline-dark btn-lg mb-3" role="button">
-    {{ company.name }}
-  </a>
-  {% endfor %}
-</div>
-
-<!-- 画面のタイトル -->
-<h1 class="text-center mt-5">{{ context.company_name.name }}(企業名)</h1>
-
-<!-- 基本情報 -->
-<div class="d-grid gap-2 col-10 mx-auto">
-  <div class="text-end">
-    <a href="#" class="fs-5 link-danger link-underline-opacity-0 link-underline-opacity-75-hover" data-bs-toggle="modal" data-bs-target="#modalDeleteCompany">削除</a>
-  </div>
-
-  <h1 class="text">事業内容</h1>
-  <h1 class="text">経営理念</h1>
-  <h1 class="text">求められているスキル</h1>
-  <h1 class="text">勤務地</h1>
-  <h1 class="text">福利厚生</h1>
-  <h1 class="text">志望動機</h1>
+  <h4 class="text">事業内容</h4>
+  <p>{{ context.company_info.business }}</p>
+  <h4 class="text">経営理念</h4>
+  <p>{{ context.company_info.mvv }}</p>
+  <h4 class="text">求められているスキル</h4>
+  <p>{{ context.company_info.required_skill }}</p>
+  <h4 class="text">勤務地</h4>
+  <p>{{ context.company_info.location }}</p>
+  <h4 class="text">福利厚生</h4>
+  <p>{{ context.company_info.benefit }}</p>
+  <h4 class="text">志望動機</h4>
+  <p>{{ context.company_info.applying_motivation }}</p>
 </div>
 
 <!-- Modal -->
 <div class="modal fade" id="modalEditInfoCompany" tabindex="-1" aria-labelledby="modalLabelEditInfoCompany" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <form action="{{ url_for('company_info_page.update') }}" method="post">
+      <form action="{{ url_for('company_info_page.update', id=context.company_info.id) }}" method="post">
         <div class="modal-header">
           <h5 class="modal-title">企業の基本情報編集</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
         <div class="modal-body">
+          <input type="hidden" name="id" value="{{ context.company_info.id }}" />
+          <input type="hidden" name="name" value="{{ context.company_info.name }}" />
+
           <div class="mb-3">
             <label for="inputbusiness" class="form-label">事業内容</label>
-            <input type="text" class="form-control" id="inputbusiness" name="business" placeholder="例：事業内容" maxlength="100" required />
+            <textarea rows="4" type="text" class="form-control" id="inputbusiness" name="business" value="{{ context.company_info.business }}"></textarea>
           </div>
         </div>
 
         <div class="modal-body">
           <div class="mb-3">
             <label for="inputmvv" class="form-label">経営理念</label>
-            <input type="text" class="form-control" id="inputmvv" name="mvv" placeholder="例：経営理念" maxlength="100" required />
+            <textarea rows="4" type="text" class="form-control" id="inputmvv" name="mvv" value="{{ context.company_info.mvv }}"></textarea>
           </div>
         </div>
 
         <div class="modal-body">
           <div class="mb-3">
             <label for="inputrequired_skill" class="form-label">求められているスキル</label>
-            <input type="text" class="form-control" id="inputrequired_skill" name="required_skill" placeholder="例：求められているスキル" maxlength="100" required />
+            <textarea rows="4" type="text" class="form-control" id="inputrequired_skill" name="required_skill" value="{{ context.company_info.required_skill }}"></textarea>
           </div>
         </div>
 
         <div class="modal-body">
           <div class="mb-3">
             <label for="inputlocation" class="form-label">勤務地</label>
-            <input type="text" class="form-control" id="inputlocation" name="location" placeholder="例：勤務地" maxlength="100" required />
+            <textarea rows="4" type="text" class="form-control" id="inputlocation" name="location" value="{{ context.company_info.location }}"></textarea>
           </div>
         </div>
 
         <div class="modal-body">
           <div class="mb-3">
             <label for="inputbenefit" class="form-label">福利厚生</label>
-            <input type="text" class="form-control" id="inputbenefit" name="benefit" placeholder="例：福利厚生" maxlength="100" required />
+            <textarea rows="4" type="text" class="form-control" id="inputbenefit" name="benefit" value="{{ context.company_info.benefit }}"></textarea>
           </div>
         </div>
 
         <div class="modal-body">
           <div class="mb-3">
             <label for="inputapplying_motivation" class="form-label">志望動機</label>
-            <input type="text" class="form-control" id="inputapplying_motivation" name="applying_motivation" placeholder="例：志望動機" maxlength="100" required />
+            <textarea rows="4" type="text" class="form-control" id="inputapplying_motivation" name="applying_motivation" value="{{ context.company_info.applying_motivation }}"></textarea>
           </div>
         </div>
 
@@ -100,7 +97,7 @@
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
             キャンセル
           </button>
-          <button type="submit" class="btn btn-primary">登録</button>
+          <button type="submit" class="btn btn-primary">更新</button>
         </div>
       </form>
     </div>

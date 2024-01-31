@@ -8,37 +8,36 @@ from app.service.company_info_service import CompanyInfoService
 from app.service.company_info_service_impl import CompanyInfoServiceImpl
 from app.repository.company_repository_impl import CompanyRepositoryImpl
 
-#Buleprintの作成、アプリの分割が可能？
-#ここでアプリのページの定義をしているっぽい
-company_info_page = Blueprint("company_info_page", __name__, url_prefix="/info")
-
+company_info_page = Blueprint("company_info_page", __name__, url_prefix="/company/<int:id>/info")
 company_info_service: CompanyInfoService = CompanyInfoServiceImpl(CompanyRepositoryImpl())
 
 
-#以下の関数は基本情報を表示するもの
-#route():リクエスト内容とサーバとの処理を紐づけるもの
-@company_info_page.route("/info/<id>")
+@company_info_page.route("/show")
 def show(id: int) -> str:
-    return render_template(
-        "companyInfo.html"
-    )
+    company_info = company_info_service.find(id)
 
-#以下の関数は基本情報を更新するもの
-#ここもよく分かりません…
-'''
-@company_info_page.route("/info/<id>", methods=["GET", "POST"])
-def update(self, form: ImmutableMultiDict[str, str]) -> Response:
+    if company_info:
+        return render_template(
+            "companyInfo.html",
+            context={
+                "company_info": company_info
+            },
+        )
+
+    flash("企業が見つかりませんでした", ERROR_CLASS)
+    return redirect(url_for("company_page.show_list"))
+
+
+@company_info_page.route("/update", methods=["GET", "POST"])
+def update(id: int) -> Response:
     company_info = None
 
     if request.method == "POST":
         company_info = company_info_service.update(request.form)
 
     if company_info:
-        flash("編集が完了しました", SUCCESS_CLASS)
+        flash("基本情報を更新しました", SUCCESS_CLASS)
     else:
         flash(ERROR_MESSAGE, ERROR_CLASS)
 
-    return redirect(
-        url_for("company_info_page.show", id=company_name.get_id()) #idがいるならget_idが使えるcompany_nameが必要?
-    )
-'''
+    return redirect(url_for("company_info_page.show", id=id))
