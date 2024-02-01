@@ -25,17 +25,17 @@
   </div>
 
   <h4 class="text">事業内容</h4>
-  <p>{{ context.company_info.business if context.company_info.business else '' }}</p>
+  <p>{{ context.company_info.business if context.company_info.business else '（未入力）' }}</p>
   <h4 class="text">経営理念</h4>
-  <p>{{ context.company_info.mvv if context.company_info.mvv else '' }}</p>
+  <p>{{ context.company_info.mvv if context.company_info.mvv else '（未入力）' }}</p>
   <h4 class="text">求められているスキル</h4>
-  <p>{{ context.company_info.required_skill if context.company_info.required_skill else '' }}</p>
+  <p>{{ context.company_info.required_skill if context.company_info.required_skill else '（未入力）' }}</p>
   <h4 class="text">勤務地</h4>
-  <p>{{ context.company_info.location if context.company_info.location else '' }}</p>
+  <p>{{ context.company_info.location if context.company_info.location else '（未入力）' }}</p>
   <h4 class="text">福利厚生</h4>
-  <p>{{ context.company_info.benefit if context.company_info.benefit else '' }}</p>
+  <p>{{ context.company_info.benefit if context.company_info.benefit else '（未入力）' }}</p>
   <h4 class="text">志望動機</h4>
-  <p>{{ context.company_info.applying_motivation if context.company_info.applying_motivation else '' }}</p>
+  <p>{{ context.company_info.applying_motivation if context.company_info.applying_motivation else '（未入力）' }}</p>
 </div>
 
 <!-- Modal -->
