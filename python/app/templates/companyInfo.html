@@ -54,42 +54,42 @@
 
           <div class="mb-3">
             <label for="inputBusiness" class="form-label">事業内容</label>
-            <textarea rows="3" type="text" class="form-control" id="inputBusiness" name="business" value="{{ context.company_info.business }}"></textarea>
+            <textarea rows="3" type="text" class="form-control" id="inputBusiness" name="business" placeholder="例：Webサービス開発">{{ context.company_info.business if context.company_info.business else '' }}</textarea>
           </div>
         </div>
 
         <div class="modal-body">
           <div class="mb-3">
             <label for="inputMvv" class="form-label">経営理念</label>
-            <textarea rows="3" type="text" class="form-control" id="inputMvv" name="mvv" value="{{ context.company_info.mvv }}"></textarea>
+            <textarea rows="3" type="text" class="form-control" id="inputMvv" name="mvv" placeholder="例：社会に貢献すること">{{ context.company_info.mvv if context.company_info.mvv else '' }}</textarea>
           </div>
         </div>
 
         <div class="modal-body">
           <div class="mb-3">
             <label for="inputRequiredSkill" class="form-label">求められているスキル</label>
-            <textarea rows="3" type="text" class="form-control" id="inputRequiredSkill" name="required_skill" value="{{ context.company_info.required_skill }}"></textarea>
+            <textarea rows="3" type="text" class="form-control" id="inputRequiredSkill" name="required_skill" placeholder="例：TOIECスコア700点以上、コミュニケーションスキル、基本情報技術者">{{ context.company_info.required_skill if context.company_info.required_skill else '' }}</textarea>
           </div>
         </div>
 
         <div class="modal-body">
           <div class="mb-3">
             <label for="inputLocation" class="form-label">勤務地</label>
-            <textarea rows="3" type="text" class="form-control" id="inputLocation" name="location" value="{{ context.company_info.location }}"></textarea>
+            <textarea rows="3" type="text" class="form-control" id="inputLocation" name="location" placeholder="例：本社:東京都港区、支社:大阪府北区">{{ context.company_info.location if context.company_info.location else '' }}</textarea>
           </div>
         </div>
 
         <div class="modal-body">
           <div class="mb-3">
             <label for="inputBenefit" class="form-label">福利厚生</label>
-            <textarea rows="3" type="text" class="form-control" id="inputBenefit" name="benefit" value="{{ context.company_info.benefit }}"></textarea>
+            <textarea rows="3" type="text" class="form-control" id="inputBenefit" name="benefit" placeholder="例：住宅手当、交通費手当">{{ context.company_info.benefit if context.company_info.benefit else '' }}</textarea>
           </div>
         </div>
 
         <div class="modal-body">
           <div class="mb-3">
             <label for="inputApplyingMotivation" class="form-label">志望動機</label>
-            <textarea rows="3" type="text" class="form-control" id="inputApplyingMotivation" name="applying_motivation" value="{{ context.company_info.applying_motivation }}"></textarea>
+            <textarea rows="3" type="text" class="form-control" id="inputApplyingMotivation" name="applying_motivation" placeholder="例：御社の経営理念に共感しました。">{{ context.company_info.applying_motivation if context.company_info.applying_motivation else '' }}</textarea>
           </div>
         </div>
 
