@@ -107,11 +107,11 @@
 ![企業の一覧表示機能（スクリーンショット）](docs/images/screenshots/showCompanyInfo.png)
 *図: 企業の基本情報の一覧表示機能（スクリーンショット）*
 
-![企業の登録機能（スクリーンショット）](docs/images/screenshots/formUpdateCompanyInfo1.png)
-*図: 企業の基本情報の編集機能1（スクリーンショット）*
+![企業の登録機能（スクリーンショット）](docs/images/screenshots/formUpdateCompanyInfoNone.png)
+*図: 企業の基本情報の編集機能(データなしの状態)（スクリーンショット）*
 
-![企業の登録機能（スクリーンショット）](docs/images/screenshots/formUpdateCompanyInfo2.png)
-*図: 企業の基本情報の編集機能2（スクリーンショット）*
+![企業の登録機能（スクリーンショット）](docs/images/screenshots/formUpdateCompanyInfo.png)
+*図: 企業の基本情報の編集機能(データありの状態)（スクリーンショット）*
 
 ![企業の登録機能（スクリーンショット）](docs/images/screenshots/resultUpdateCompanyInfo.png)
 *図: 企業の基本情報の更新結果（スクリーンショット）*
