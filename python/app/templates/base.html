@@ -21,8 +21,9 @@
       {% if messages %}
         <div class="flashes m-3">
         {% for category, message in messages %}
-          <div class="alert alert-{{ category }}">
-            {{ message }}
+          <div class="alert alert-{{ category }} d-flex">
+            <span class="flex-fill">{{ message }}</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
         {% endfor %}
         </div>

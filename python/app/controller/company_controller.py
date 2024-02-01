@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request
 from werkzeug.wrappers.response import Response
 
 from app.config.flash_config import SUCCESS_CLASS, ERROR_CLASS, ERROR_MESSAGE
+from app.view_model.company_name import CompanyName
 from app.service.company_service import CompanyService
 from app.service.company_service_impl import CompanyServiceImpl
 from app.repository.company_repository_impl import CompanyRepositoryImpl
@@ -12,7 +13,7 @@ company_service: CompanyService = CompanyServiceImpl(CompanyRepositoryImpl())
 
 @company_page.route("/create", methods=["GET", "POST"])
 def create() -> Response:
-    company_name = None
+    company_name: CompanyName = None
 
     if request.method == "POST":
         company_name = company_service.create(request.form)
@@ -29,7 +30,7 @@ def create() -> Response:
 
 @company_page.route("/list")
 def show_list() -> str:
-    companies_name = company_service.make_list()
+    companies_name: list[CompanyName] = company_service.make_list()
     return render_template(
         "companyList.html",
         context={
@@ -38,9 +39,9 @@ def show_list() -> str:
     )
 
 
-@company_page.route("/<id>")
+@company_page.route("/<int:id>")
 def show_detail(id: int) -> str:
-    company_name = company_service.find(id)
+    company_name: CompanyName = company_service.find(id)
 
     if company_name:
         return render_template(

@@ -51,14 +51,19 @@ def create(company_id: int) -> Response:
 @company_connection_page.route("/list")
 def show_list(company_id: int) -> str:
     company_name = company_service.find(company_id)
-    company_connection_forms = connection_service.make_list(company_id)
-    return render_template(
-        "companyConnectionList.html",
-        context={
-            "company_name": company_name,
-            "company_connection_forms": company_connection_forms
-        },
-    )
+
+    if company_name:
+        company_connection_forms = connection_service.make_list(company_id)
+        return render_template(
+            "companyConnectionList.html",
+            context={
+                "company_name": company_name,
+                "company_connection_forms": company_connection_forms
+            },
+        )
+
+    flash("企業が見つかりませんでした", ERROR_CLASS)
+    return redirect(url_for("company_page.show_list"))
 
 
 @company_connection_page.route("/<int:id>")

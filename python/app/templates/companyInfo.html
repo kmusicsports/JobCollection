@@ -25,26 +25,26 @@
   </div>
 
   <h4 class="text">事業内容</h4>
-  <p>{{ context.company_info.business }}</p>
+  <p>{{ context.company_info.business if context.company_info.business else '' }}</p>
   <h4 class="text">経営理念</h4>
-  <p>{{ context.company_info.mvv }}</p>
+  <p>{{ context.company_info.mvv if context.company_info.mvv else '' }}</p>
   <h4 class="text">求められているスキル</h4>
-  <p>{{ context.company_info.required_skill }}</p>
+  <p>{{ context.company_info.required_skill if context.company_info.required_skill else '' }}</p>
   <h4 class="text">勤務地</h4>
-  <p>{{ context.company_info.location }}</p>
+  <p>{{ context.company_info.location if context.company_info.location else '' }}</p>
   <h4 class="text">福利厚生</h4>
-  <p>{{ context.company_info.benefit }}</p>
+  <p>{{ context.company_info.benefit if context.company_info.benefit else '' }}</p>
   <h4 class="text">志望動機</h4>
-  <p>{{ context.company_info.applying_motivation }}</p>
+  <p>{{ context.company_info.applying_motivation if context.company_info.applying_motivation else '' }}</p>
 </div>
 
 <!-- Modal -->
 <div class="modal fade" id="modalEditInfoCompany" tabindex="-1" aria-labelledby="modalLabelEditInfoCompany" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
     <div class="modal-content">
       <form action="{{ url_for('company_info_page.update', id=context.company_info.id) }}" method="post">
         <div class="modal-header">
-          <h5 class="modal-title">企業の基本情報編集</h5>
+          <h5 class="modal-title">基本情報の編集</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
@@ -53,43 +53,43 @@
           <input type="hidden" name="name" value="{{ context.company_info.name }}" />
 
           <div class="mb-3">
-            <label for="inputbusiness" class="form-label">事業内容</label>
-            <textarea rows="4" type="text" class="form-control" id="inputbusiness" name="business" value="{{ context.company_info.business }}"></textarea>
+            <label for="inputBusiness" class="form-label">事業内容</label>
+            <textarea rows="3" type="text" class="form-control" id="inputBusiness" name="business" value="{{ context.company_info.business }}"></textarea>
           </div>
         </div>
 
         <div class="modal-body">
           <div class="mb-3">
-            <label for="inputmvv" class="form-label">経営理念</label>
-            <textarea rows="4" type="text" class="form-control" id="inputmvv" name="mvv" value="{{ context.company_info.mvv }}"></textarea>
+            <label for="inputMvv" class="form-label">経営理念</label>
+            <textarea rows="3" type="text" class="form-control" id="inputMvv" name="mvv" value="{{ context.company_info.mvv }}"></textarea>
           </div>
         </div>
 
         <div class="modal-body">
           <div class="mb-3">
-            <label for="inputrequired_skill" class="form-label">求められているスキル</label>
-            <textarea rows="4" type="text" class="form-control" id="inputrequired_skill" name="required_skill" value="{{ context.company_info.required_skill }}"></textarea>
+            <label for="inputRequiredSkill" class="form-label">求められているスキル</label>
+            <textarea rows="3" type="text" class="form-control" id="inputRequiredSkill" name="required_skill" value="{{ context.company_info.required_skill }}"></textarea>
           </div>
         </div>
 
         <div class="modal-body">
           <div class="mb-3">
-            <label for="inputlocation" class="form-label">勤務地</label>
-            <textarea rows="4" type="text" class="form-control" id="inputlocation" name="location" value="{{ context.company_info.location }}"></textarea>
+            <label for="inputLocation" class="form-label">勤務地</label>
+            <textarea rows="3" type="text" class="form-control" id="inputLocation" name="location" value="{{ context.company_info.location }}"></textarea>
           </div>
         </div>
 
         <div class="modal-body">
           <div class="mb-3">
-            <label for="inputbenefit" class="form-label">福利厚生</label>
-            <textarea rows="4" type="text" class="form-control" id="inputbenefit" name="benefit" value="{{ context.company_info.benefit }}"></textarea>
+            <label for="inputBenefit" class="form-label">福利厚生</label>
+            <textarea rows="3" type="text" class="form-control" id="inputBenefit" name="benefit" value="{{ context.company_info.benefit }}"></textarea>
           </div>
         </div>
 
         <div class="modal-body">
           <div class="mb-3">
-            <label for="inputapplying_motivation" class="form-label">志望動機</label>
-            <textarea rows="4" type="text" class="form-control" id="inputapplying_motivation" name="applying_motivation" value="{{ context.company_info.applying_motivation }}"></textarea>
+            <label for="inputApplyingMotivation" class="form-label">志望動機</label>
+            <textarea rows="3" type="text" class="form-control" id="inputApplyingMotivation" name="applying_motivation" value="{{ context.company_info.applying_motivation }}"></textarea>
           </div>
         </div>
 
